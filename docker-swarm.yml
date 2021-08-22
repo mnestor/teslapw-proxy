@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  telegraf:
+    image: telegraf:latest
+    volumes:
+      - /configs/telegraf.conf:/etc/telegraf/telegraf.conf
+    networks:
+      - teslapw
+      - monitoring
+    environment:
+      - INFLUX_DB=tasks.influxdb:8086
+      - PROXY_NAME=tasks.proxy
+    
+  proxy:
+    image: mnestor/teslapw-proxy:latest
+    networks:
+      - teslapw
+    environment:
+      - USERNAME
+      - PASSWORD
+      
+networks:
+  monitoring:
+    external: true
+  teslapw:
+    driver: overlay
+    ipam:
+      config:
+        - subnet: 10.99.13.0/24
+    

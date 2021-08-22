@@ -11,10 +11,9 @@ if [ -z "${PASSWORD}" ]; then
 fi
 
 POWERWALL="${POWERWALL:-powerwall}"
-LISTEN_PORT="${PORT:-80}"
 
 $GOPATH/bin/tesla-powerwall-proxy \
     --username "${USERNAME}" \
     --password "${PASSWORD}" \
     --host "${POWERWALL}" \
-    --listen "localhost:${LISTEN_PORT}"
+    --listen "0.0.0.0:80"

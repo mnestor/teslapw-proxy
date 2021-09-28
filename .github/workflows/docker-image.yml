@@ -24,6 +24,7 @@ jobs:
         id: step_one
         run: |
           echo "NC_LABEL=$(head -n 1 Dockerfile|cut -d":" -f2)" >> $GITHUB_ENV
+          echo "VER_LABEL=$(head -n 1 Dockerfile|cut -d":" -f2|cut -d"-" -f1)" >> $GITHUB_ENV
       -
         name: Docker meta
         id: meta
@@ -35,13 +36,14 @@ jobs:
           tags: |
             type=ref,event=pr
             type=semver,pattern={{raw}},value=${{env.NC_LABEL}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{raw}},value=${{env.VER_LABEL}}
             type=sha
             type=ref,event=branch
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}
+            #type=semver,pattern={{version}}
+            #type=semver,pattern={{version}}
+            #type=semver,pattern={{major}}
           flavor: |
-            latest=true
+            latest=auto
      # -
      #   name: Set up QEMU
      #   uses: docker/setup-qemu-action@v1

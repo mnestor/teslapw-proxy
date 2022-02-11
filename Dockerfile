@@ -1,4 +1,4 @@
-FROM golang:1.17.5-alpine3.14
+FROM golang:1.17.7-alpine3.14
 
 EXPOSE 80/tcp
 
